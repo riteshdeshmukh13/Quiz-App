@@ -14,7 +14,7 @@ const questions = [
                 text: "Elon Musk",
                 correct: false,
             },
-             {
+            {
                 text: "Musk",
                 correct: false,
             }
@@ -31,11 +31,11 @@ const questions = [
                 text: "Mson",
                 correct: false,
             },
-             {
+            {
                 text: "Elon Musk",
                 correct: false,
             },
-             {
+            {
                 text: "Musk",
                 correct: false,
             }
@@ -57,7 +57,7 @@ const questions = [
                 text: "Elon Musk",
                 correct: false,
             },
-             {
+            {
                 text: "Musk",
                 correct: false,
             }
@@ -78,7 +78,7 @@ const questions = [
                 text: "Elon Musk",
                 correct: false,
             },
-             {
+            {
                 text: "Musk",
                 correct: false,
             }
@@ -105,75 +105,37 @@ const questions = [
             }
         ]
     },
-
 ]
+
 let questNumber = 0;
- let score = 0;
+let score = 0;
+let mcq = questions[questNumber]["ans"].length
 
-const but1 = document.getElementById("o1")
-const but2 = document.getElementById("o2")
-const but3 = document.getElementById("o3")
-const but4 = document.getElementById("o4")
 
+
+const box = document.getElementById("answer-buttons")
 
 function start(questNumber) {
-
-   
     const questionElement = document.getElementById("question")
     questionElement.innerHTML = questions[questNumber]["quest"]
 
-    but1.innerHTML = questions[questNumber]["ans"][0]["text"]
-    but2.innerHTML = questions[questNumber]["ans"][1]["text"]
-    but3.innerHTML = questions[questNumber]["ans"][2]["text"]
-    but4.innerHTML = questions[questNumber]["ans"][3]["text"]
-    but1.addEventListener(
-        "click",
-        function () {
-            if (questions[questNumber]["ans"][0]["correct"] == true) {
-                but1.innerHTML = "correct"
-                score++
-            }
-            else {
-                but1.innerHTML = "incorrect"
-            }
-        }
-    )
-    but2.addEventListener(
-        "click",
-        function () {
-            if (questions[questNumber]["ans"][1]["correct"] == true) {
-                but2.innerHTML = "correct"
-                score++
-            }
-            else {
-                but2.innerHTML = "incorrect"
-            }
-        }
-    )
-    but3.addEventListener(
-        "click",
-        function () {
-            if (questions[questNumber]["ans"][2]["correct"] == true) {
-                but3.innerHTML = "correct"
-                score++
-            }
-            else {
-                but3.innerHTML = "incorrect"
-            }
-        }
-    )
-    but4.addEventListener(
-        "click",
-        function () {
-            if (questions[questNumber]["ans"][3]["correct"] == true) {
-                but4.innerHTML = "correct"
-                score++
-            }
-            else {
-                but4.innerHTML = "incorrect"
-            }
-        }
-    )
+    for (let i = 0; i < mcq; i++) {
+      const  button = document.createElement("button")
+        button.innerHTML = questions[questNumber]["ans"][i]["text"]
+        button.classList.add("btn")
+        button.addEventListener("click",
+            function () {
+                if (questions[questNumber]["ans"][i]["correct"] == true) {
+                    button.innerHTML = "correct"
+                    score++
+                }
+                else {
+                    button.innerHTML = "incorrect"
+                }
+            })
+
+        box.appendChild(button)
+    }
 
     const nextButton = document.getElementById("next-btn")
     nextButton.addEventListener(
@@ -183,6 +145,9 @@ function start(questNumber) {
             questionElement.innerHTML = ""
             questNumber++
 
+            while (box.firstChild) {
+                box.removeChild(box.firstChild)
+            }
 
             if (questNumber < questionLength) {
                 start(questNumber)
@@ -190,17 +155,13 @@ function start(questNumber) {
             else {
                 const scorecard = document.getElementById("num")
                 scorecard.innerHTML = "Score :" + score
-                const optionElement = document.getElementById("answer-buttons")
-                while(optionElement.firstChild){
-                    optionElement.removeChild(optionElement.firstChild)
-                }
 
             }
 
         }
     )
-
 }
+
 const questionLength = questions.length
 
 start(questNumber)
